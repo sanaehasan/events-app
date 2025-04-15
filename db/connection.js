@@ -1,11 +1,12 @@
 const { Pool } = require("pg");
+const { config } = require("pg-format");
 
 const ENV = process.env.NODE_ENV || "development";
 
 require("dotenv").config({
-  path: `${__dirname}/../.evn.${ENV}`,
+  path: `${__dirname}/../.env.${ENV}`,
 });
-
+console.log(`env.${ENV}`);
 if (!process.env.PGDATABASE) {
   throw new Error("No PGDATABASE configured!");
 }
@@ -17,4 +18,4 @@ if (!process.env.PGDATABASE) {
 //   config.max = 2;
 // }
 
-module.exports = new Pool();
+module.exports = new Pool(/*config */);

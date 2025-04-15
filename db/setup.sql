@@ -1,0 +1,9 @@
+DROP DATABASE IF EXISTS events;
+DROP DATABASE IF EXISTS events_test;
+
+CREATE DATABASE events;
+CREATE DATABASE events_test;
+\c events;
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+\c events_test;
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
