@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node listen.js",
     "dev": "nodemon listen.js",
-    "setup_dbs": "psql -f ./db/setup.sql"
+    "setup_dbs": "psql -f ./db/setup.sql",
+    "seed": "node ./db/seed/run_seed.js"
   },
   "repository": {
     "type": "git",

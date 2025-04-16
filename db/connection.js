@@ -18,4 +18,4 @@ if (!process.env.PGDATABASE) {
 //   config.max = 2;
 // }
 
-module.exports = new Pool(/*config */);
+module.exports = new Pool();
