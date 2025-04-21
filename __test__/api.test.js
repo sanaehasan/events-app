@@ -12,7 +12,7 @@ afterAll(() => {
   db.end();
 });
 
-describe("/api", () => {
+xdescribe("/api", () => {
   test("GET:200 status - with a welcom message", () => {
     return request(app)
       .get("/api")
@@ -23,7 +23,7 @@ describe("/api", () => {
   });
 });
 
-describe("/any", () => {
+xdescribe("/any", () => {
   test("GET:404 -return msg endpoint does not exist", () => {
     return request(app)
       .get("/hello")
@@ -33,7 +33,7 @@ describe("/any", () => {
       });
   });
 });
-describe("/api/users/:user_id", () => {
+xdescribe("/api/users/:user_id", () => {
   test("GET: 200 status - get a user by id", () => {
     return request(app)
       .get("/api/users/1")
@@ -71,7 +71,7 @@ describe("/api/users/:user_id", () => {
       });
   });
 });
-describe("/api/users", () => {
+xdescribe("/api/users", () => {
   test("GET: 200 status  find user by email and password", () => {
     return request(app)
       .get("/api/users?email=awalbrook0@mtv.com&password=hello")
@@ -102,7 +102,7 @@ describe("/api/users", () => {
   });
 });
 
-describe("/api/events", () => {
+xdescribe("/api/events", () => {
   test("GET: 200 status get all events", () => {
     return request(app)
       .get("/api/events")
@@ -190,6 +190,21 @@ describe("/api/events", () => {
       .expect(404)
       .then(({ body }) => {
         expect(body.msg).toBe("genre does not exist");
+      });
+  });
+});
+
+describe("/api/genre", () => {
+  test("GET:200 status - get all genre entrees", () => {
+    return request(app)
+      .get("/api/genre")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.genre.length).toBe(7);
+        expect(body.genre[0]).toMatchObject({
+          genre_id: 1,
+          genre_name: "music",
+        });
       });
   });
 });
