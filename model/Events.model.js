@@ -14,7 +14,7 @@ function fetchEvents(genre, city) {
   if (city && !genre) {
     queryString += ` WHERE events.city='${city}'`;
   }
-  console.log(queryString);
+
   queryArr.push(db.query(queryString));
   return Promise.all(queryArr).then((data) => {
     if (data.length === 2 && data[0].rows.length === 0) {
