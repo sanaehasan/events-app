@@ -5,5 +5,13 @@ const customErrosHandle = (err, req, res, next) => {
     next(err);
   }
 };
-
-module.exports = { customErrosHandle };
+const handleSqlError = (err, req, res, next) => {
+  if (err.code === "22P02") {
+    res.status(400).send({ msg: "Id should be a number" });
+  }
+  next(err);
+};
+const serverErrosHandle = (err, req, res, next) => {
+  res.status(500).send({ msg: "Internal server error" });
+};
+module.exports = { customErrosHandle, handleSqlError, serverErrosHandle };
