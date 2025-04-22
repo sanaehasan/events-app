@@ -67,4 +67,43 @@ function addEvent({
       return rows[0];
     });
 }
-module.exports = { fetchEvents, addEvent, selectEventsByUserId };
+function updateEvent({
+  event_id,
+  createdBy,
+  start_date,
+  end_date,
+  city,
+  country,
+  image,
+  price,
+  title,
+  description,
+  location,
+  genre_id,
+}) {
+  return db
+    .query(
+      "UPDATE events SET createdBy=$2,start_date=$3, end_date=$4, city=$5, country=$6, image=$7, price=$8,title=$9, description=$10,location=$11,genre_id=$12 where event_id=$1 returning*;",
+      [
+        event_id,
+        createdBy,
+        start_date,
+        end_date,
+        city,
+        country,
+        image,
+        price,
+        title,
+        description,
+        location,
+        genre_id,
+      ]
+    )
+    .then(({ rows }) => {
+      if (!rows.length) {
+        return Promise.reject({ status: 404, msg: "Event not found" });
+      }
+      return rows[0];
+    });
+}
+module.exports = { fetchEvents, addEvent, selectEventsByUserId, updateEvent };

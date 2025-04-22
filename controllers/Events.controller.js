@@ -2,6 +2,7 @@ const {
   fetchEvents,
   addEvent,
   selectEventsByUserId,
+  updateEvent,
 } = require("../model/Events.model");
 
 function getEvents(req, res, next) {
@@ -35,4 +36,15 @@ function postEvent(req, res, next) {
       next(err);
     });
 }
-module.exports = { getEvents, postEvent, getEventByUserId };
+
+function patchEvent(req, res, next) {
+  const newEvent = req.body;
+  updateEvent(newEvent)
+    .then((data) => {
+      return res.status(200).send({ event: data });
+    })
+    .catch((err) => {
+      next(err);
+    });
+}
+module.exports = { getEvents, postEvent, getEventByUserId, patchEvent };

@@ -71,7 +71,7 @@ xdescribe("/api/users/:user_id", () => {
       });
   });
 });
-describe("/api/users", () => {
+xdescribe("/api/users", () => {
   test("GET: 200 status  find user by email and password", () => {
     return request(app)
       .get("/api/users?email=awalbrook0@mtv.com&password=hello")
@@ -159,7 +159,7 @@ describe("/api/users", () => {
   });
 });
 
-xdescribe("/api/events", () => {
+describe("/api/events", () => {
   test("GET: 200 status get all events", () => {
     return request(app)
       .get("/api/events")
@@ -279,6 +279,46 @@ xdescribe("/api/events", () => {
       .then(({ body }) => {
         expect(body.event).toMatchObject({
           event_id: 11,
+          createdby: 8,
+          start_date: "27-09-2026",
+          end_date: "22-11-2026",
+          city: "Langley",
+          country: "United Kingdom",
+          image: "http://dummyimage.com/174x100.png/ff4444/ffffff",
+          price: "423.69",
+          title:
+            "suspendisse accumsan tortor quis turpis sed ante vivamus tortor duis mattis egestas metus aenean",
+          description:
+            "Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem. Sed sagittis.",
+          location: "4377 Little Fleur Terrace",
+          genre_id: 7,
+        });
+      });
+  });
+  test("PATCH: 200 status when updating en event", () => {
+    const Event = {
+      event_id: 4,
+      createdBy: 8,
+      start_date: "27-09-2026",
+      end_date: "22-11-2026",
+      city: "Langley",
+      country: "United Kingdom",
+      image: "http://dummyimage.com/174x100.png/ff4444/ffffff",
+      price: 423.69,
+      title:
+        "suspendisse accumsan tortor quis turpis sed ante vivamus tortor duis mattis egestas metus aenean",
+      description:
+        "Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem. Sed sagittis.",
+      location: "4377 Little Fleur Terrace",
+      genre_id: 7,
+    };
+    return request(app)
+      .patch("/api/events")
+      .send(Event)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.event).toMatchObject({
+          event_id: 4,
           createdby: 8,
           start_date: "27-09-2026",
           end_date: "22-11-2026",

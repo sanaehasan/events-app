@@ -15,6 +15,7 @@ const {
   getEvents,
   postEvent,
   getEventByUserId,
+  patchEvent,
 } = require("./controllers/Events.controller");
 const { getGenre } = require("./controllers/Genre.controller");
 const { postAttendees } = require("./controllers/Attendees.controller");
@@ -29,10 +30,11 @@ app.get("/api", (req, res) => {
 app.get("/api/users/:user_id", getUserById);
 app.get("/api/users", authenticateUserFunction);
 app.post("/api/users", addUser);
-app.patch("/api/users",patchUser)
+app.patch("/api/users", patchUser);
 app.get("/api/events", getEvents);
 app.get("/api/events/:user_id", getEventByUserId);
 app.post("/api/events", postEvent);
+app.patch("/api/events", patchEvent);
 app.get("/api/genre", getGenre);
 app.post("/api/attendees", postAttendees);
 app.get(/(.*)/, (req, res) => {
