@@ -76,4 +76,17 @@ function updateUser({
       return rows[0];
     });
 }
-module.exports = { fetchUserById, authenticateUser, postUser, updateUser };
+function deleteUser(user_id) {
+  return db
+    .query("delete from users where user_id=$1;", [user_id])
+    .then(({ rows }) => {
+      return rows[0];
+    });
+}
+module.exports = {
+  fetchUserById,
+  authenticateUser,
+  postUser,
+  updateUser,
+  deleteUser,
+};

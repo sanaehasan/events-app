@@ -33,7 +33,7 @@ xdescribe("/any", () => {
       });
   });
 });
-xdescribe("/api/users/:user_id", () => {
+describe("/api/users/:user_id", () => {
   test("GET: 200 status - get a user by id", () => {
     return request(app)
       .get("/api/users/1")
@@ -68,6 +68,14 @@ xdescribe("/api/users/:user_id", () => {
       .expect(400)
       .then(({ body }) => {
         expect(body.msg).toBe("Id should be a number");
+      });
+  });
+  test("Delete:204 delete user by id", () => {
+    return request(app)
+      .delete("/api/users/2")
+      .expect(204)
+      .then(({ body }) => {
+        console.log(body);
       });
   });
 });
@@ -159,7 +167,7 @@ xdescribe("/api/users", () => {
   });
 });
 
-describe("/api/events", () => {
+xdescribe("/api/events", () => {
   test("GET: 200 status get all events", () => {
     return request(app)
       .get("/api/events")

@@ -46,14 +46,14 @@ const seed = ({ usersData, eventsData, genraData, attendeesData }) => {
             title VARCHAR NOT NULL,
             description TEXT,
             location TEXT,
-            genre_id INT NOT NULL REFERENCES genra(genre_id)
+            genre_id INT NOT NULL REFERENCES genra(genre_id) ON DELETE CASCADE
             );`);
     })
     .then(() => {
       return db.query(`CREATE TABLE attendees(
             attendee_id SERIAL PRIMARY KEY,
-            user_id INT NOT NULL REFERENCES users(user_id),
-            event_id INT NOT NULL REFERENCES events(event_id)
+            user_id INT NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+            event_id INT NOT NULL REFERENCES events(event_id) ON DELETE CASCADE
                         );`);
     })
     .then(() => {

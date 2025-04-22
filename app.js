@@ -5,6 +5,7 @@ const {
   authenticateUserFunction,
   addUser,
   patchUser,
+  removeUser,
 } = require("./controllers/Users.controller");
 const {
   customErrosHandle,
@@ -31,6 +32,7 @@ app.get("/api/users/:user_id", getUserById);
 app.get("/api/users", authenticateUserFunction);
 app.post("/api/users", addUser);
 app.patch("/api/users", patchUser);
+app.delete("/api/users/:user_id", removeUser);
 app.get("/api/events", getEvents);
 app.get("/api/events/:user_id", getEventByUserId);
 app.post("/api/events", postEvent);

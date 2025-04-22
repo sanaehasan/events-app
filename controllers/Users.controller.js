@@ -3,6 +3,7 @@ const {
   authenticateUser,
   postUser,
   updateUser,
+  deleteUser,
 } = require("../model/Users.model");
 
 function getUserById(req, res, next) {
@@ -49,4 +50,16 @@ function patchUser(req, res, next) {
       next(err);
     });
 }
-module.exports = { getUserById, authenticateUserFunction, addUser, patchUser };
+function removeUser(req, res, next) {
+  const { user_id } = req.params;
+  deleteUser(user_id).then((data) => {
+    res.status(204).send({ msg: data });
+  });
+}
+module.exports = {
+  getUserById,
+  authenticateUserFunction,
+  addUser,
+  patchUser,
+  removeUser,
+};
