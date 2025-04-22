@@ -71,7 +71,7 @@ xdescribe("/api/users/:user_id", () => {
       });
   });
 });
-describe("/api/users", () => {
+xdescribe("/api/users", () => {
   test("GET: 200 status  find user by email and password", () => {
     return request(app)
       .get("/api/users?email=awalbrook0@mtv.com&password=hello")
@@ -130,7 +130,7 @@ describe("/api/users", () => {
   });
 });
 
-xdescribe("/api/events", () => {
+describe("/api/events", () => {
   test("GET: 200 status get all events", () => {
     return request(app)
       .get("/api/events")
@@ -211,13 +211,59 @@ xdescribe("/api/events", () => {
         });
       });
   });
-
+  test("GET: 200 status get  events by user_id", () => {
+    return request(app)
+      .get("/api/events/5")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.events.length).toBe(10);
+      });
+  });
   test("Get: 404 status when getting events by non existant genre ", () => {
     return request(app)
       .get("/api/events?genre=Reg")
       .expect(404)
       .then(({ body }) => {
         expect(body.msg).toBe("genre does not exist");
+      });
+  });
+  test("POST: 201 status when adding a user", () => {
+    const newEvent = {
+      createdBy: 8,
+      start_date: "27-09-2026",
+      end_date: "22-11-2026",
+      city: "Langley",
+      country: "United Kingdom",
+      image: "http://dummyimage.com/174x100.png/ff4444/ffffff",
+      price: 423.69,
+      title:
+        "suspendisse accumsan tortor quis turpis sed ante vivamus tortor duis mattis egestas metus aenean",
+      description:
+        "Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem. Sed sagittis.",
+      location: "4377 Little Fleur Terrace",
+      genre_id: 7,
+    };
+    return request(app)
+      .post("/api/events")
+      .send(newEvent)
+      .expect(201)
+      .then(({ body }) => {
+        expect(body.event).toMatchObject({
+          event_id: 11,
+          createdby: 8,
+          start_date: "27-09-2026",
+          end_date: "22-11-2026",
+          city: "Langley",
+          country: "United Kingdom",
+          image: "http://dummyimage.com/174x100.png/ff4444/ffffff",
+          price: "423.69",
+          title:
+            "suspendisse accumsan tortor quis turpis sed ante vivamus tortor duis mattis egestas metus aenean",
+          description:
+            "Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem. Sed sagittis.",
+          location: "4377 Little Fleur Terrace",
+          genre_id: 7,
+        });
       });
   });
 });

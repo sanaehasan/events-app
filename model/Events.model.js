@@ -23,5 +23,48 @@ function fetchEvents(genre, city) {
     return data[data.length - 1].rows;
   });
 }
-
-module.exports = { fetchEvents };
+function selectEventsByUserId(id) {
+  return db
+    .query(
+      "select * from events join attendees on events.event_id = attendees.event_id where user_id=$1 ;",
+      [id]
+    )
+    .then(({ rows }) => {
+      return rows;
+    });
+}
+function addEvent({
+  createdBy,
+  start_date,
+  end_date,
+  city,
+  country,
+  image,
+  price,
+  title,
+  description,
+  location,
+  genre_id,
+}) {
+  return db
+    .query(
+      "insert into events (createdBy,start_date, end_date, city, country, image, price,title, description,location,genre_id) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) returning *;",
+      [
+        createdBy,
+        start_date,
+        end_date,
+        city,
+        country,
+        image,
+        price,
+        title,
+        description,
+        location,
+        genre_id,
+      ]
+    )
+    .then(({ rows }) => {
+      return rows[0];
+    });
+}
+module.exports = { fetchEvents, addEvent, selectEventsByUserId };

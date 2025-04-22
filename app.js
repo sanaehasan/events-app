@@ -10,7 +10,11 @@ const {
   handleSqlError,
   serverErrosHandle,
 } = require("./controllers/ErrorsHandle");
-const { getEvents } = require("./controllers/Events.controller");
+const {
+  getEvents,
+  postEvent,
+  getEventByUserId,
+} = require("./controllers/Events.controller");
 const { getGenre } = require("./controllers/Genre.controller");
 
 const app = express();
@@ -24,6 +28,8 @@ app.get("/api/users/:user_id", getUserById);
 app.get("/api/users", authenticateUserFunction);
 app.post("/api/users", addUser);
 app.get("/api/events", getEvents);
+app.get("/api/events/:user_id", getEventByUserId);
+app.post("/api/events", postEvent);
 app.get("/api/genre", getGenre);
 app.get(/(.*)/, (req, res) => {
   return res.status(404).send({ msg: "Endpoint does not exist!" });
