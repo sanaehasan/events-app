@@ -53,4 +53,27 @@ function postUser({
       return rows[0];
     });
 }
-module.exports = { fetchUserById, authenticateUser, postUser };
+function updateUser({
+  user_id,
+  username,
+  name,
+  email,
+  avatar,
+  role,
+  city,
+  country,
+  password,
+}) {
+  return db
+    .query(
+      "UPDATE users SET username=$1 ,name=$2,email=$3,avatar=$4,role=$5,city=$6,country=$7, password=crypt($8, gen_salt('bf', 12)) WHERE user_id=$9 returning *;",
+      [username, name, email, avatar, role, city, country, password, user_id]
+    )
+    .then(({ rows }) => {
+      if (!rows.length) {
+        return Promise.reject({ status: 404, msg: "user info not found" });
+      }
+      return rows[0];
+    });
+}
+module.exports = { fetchUserById, authenticateUser, postUser, updateUser };

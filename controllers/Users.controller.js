@@ -2,6 +2,7 @@ const {
   fetchUserById,
   authenticateUser,
   postUser,
+  updateUser,
 } = require("../model/Users.model");
 
 function getUserById(req, res, next) {
@@ -38,4 +39,14 @@ function addUser(req, res, next) {
     });
 }
 
-module.exports = { getUserById, authenticateUserFunction, addUser };
+function patchUser(req, res, next) {
+  const updatedUser = req.body;
+  updateUser(updatedUser)
+    .then((data) => {
+      res.status(200).send({ user: data });
+    })
+    .catch((err) => {
+      next(err);
+    });
+}
+module.exports = { getUserById, authenticateUserFunction, addUser, patchUser };

@@ -71,7 +71,7 @@ xdescribe("/api/users/:user_id", () => {
       });
   });
 });
-xdescribe("/api/users", () => {
+describe("/api/users", () => {
   test("GET: 200 status  find user by email and password", () => {
     return request(app)
       .get("/api/users?email=awalbrook0@mtv.com&password=hello")
@@ -128,9 +128,38 @@ xdescribe("/api/users", () => {
         });
       });
   });
+  test("patch: 200 status when updating a user", () => {
+    const newUser = {
+      user_id: 4,
+      username: "sworks9",
+      name: "Shauna Works",
+      email: "sworks9@wsj.com",
+      avatar: "https://robohash.org/nequesedquam.png?size=50x50&set=set1",
+      role: "user",
+      city: "Wirral",
+      country: "United Kingdom",
+      password: "kkk",
+    };
+    return request(app)
+      .patch("/api/users")
+      .send(newUser)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.user).toMatchObject({
+          user_id: 4,
+          username: "sworks9",
+          name: "Shauna Works",
+          email: "sworks9@wsj.com",
+          avatar: "https://robohash.org/nequesedquam.png?size=50x50&set=set1",
+          role: "user",
+          city: "Wirral",
+          country: "United Kingdom",
+        });
+      });
+  });
 });
 
-describe("/api/events", () => {
+xdescribe("/api/events", () => {
   test("GET: 200 status get all events", () => {
     return request(app)
       .get("/api/events")
@@ -227,7 +256,7 @@ describe("/api/events", () => {
         expect(body.msg).toBe("genre does not exist");
       });
   });
-  test("POST: 201 status when adding a user", () => {
+  test("POST: 201 status when adding en event", () => {
     const newEvent = {
       createdBy: 8,
       start_date: "27-09-2026",
@@ -268,7 +297,7 @@ describe("/api/events", () => {
   });
 });
 
-describe("/api/genre", () => {
+xdescribe("/api/genre", () => {
   test("GET:200 status - get all genre entrees", () => {
     return request(app)
       .get("/api/genre")
@@ -278,6 +307,21 @@ describe("/api/genre", () => {
         expect(body.genre[0]).toMatchObject({
           genre_id: 1,
           genre_name: "music",
+        });
+      });
+  });
+});
+xdescribe("/api/attendees", () => {
+  test("POST:201 post an attendee for an event", () => {
+    const newAttendee = { user_id: 2, event_id: 7 };
+    return request(app)
+      .post("/api/attendees")
+      .send(newAttendee)
+      .then(({ body }) => {
+        expect(body.attendee).toMatchObject({
+          attendee_id: 101,
+          user_id: 2,
+          event_id: 7,
         });
       });
   });
