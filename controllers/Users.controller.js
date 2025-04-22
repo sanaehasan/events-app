@@ -1,4 +1,8 @@
-const { fetchUserById, authenticateUser } = require("../model/Users.model");
+const {
+  fetchUserById,
+  authenticateUser,
+  postUser,
+} = require("../model/Users.model");
 
 function getUserById(req, res, next) {
   const { user_id } = req.params;
@@ -21,4 +25,17 @@ function authenticateUserFunction(req, res, next) {
       next(err);
     });
 }
-module.exports = { getUserById, authenticateUserFunction };
+
+function addUser(req, res, next) {
+  const user = req.body;
+
+  postUser(user)
+    .then((data) => {
+      return res.status(201).send({ user: data });
+    })
+    .catch((err) => {
+      next(err);
+    });
+}
+
+module.exports = { getUserById, authenticateUserFunction, addUser };

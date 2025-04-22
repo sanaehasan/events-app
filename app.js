@@ -1,7 +1,9 @@
 const express = require("express");
+const cors = require("cors");
 const {
   getUserById,
   authenticateUserFunction,
+  addUser,
 } = require("./controllers/Users.controller");
 const {
   customErrosHandle,
@@ -13,11 +15,14 @@ const { getGenre } = require("./controllers/Genre.controller");
 
 const app = express();
 
+app.use(cors());
+app.use(express.json());
 app.get("/api", (req, res) => {
   return res.status(200).send({ msg: "welcom to my api for events" });
 });
 app.get("/api/users/:user_id", getUserById);
 app.get("/api/users", authenticateUserFunction);
+app.post("/api/users", addUser);
 app.get("/api/events", getEvents);
 app.get("/api/genre", getGenre);
 app.get(/(.*)/, (req, res) => {

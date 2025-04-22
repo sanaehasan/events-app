@@ -71,7 +71,7 @@ xdescribe("/api/users/:user_id", () => {
       });
   });
 });
-xdescribe("/api/users", () => {
+describe("/api/users", () => {
   test("GET: 200 status  find user by email and password", () => {
     return request(app)
       .get("/api/users?email=awalbrook0@mtv.com&password=hello")
@@ -98,6 +98,34 @@ xdescribe("/api/users", () => {
       .expect(404)
       .then(({ body }) => {
         expect(body.msg).toBe("email or password is incorrect");
+      });
+  });
+  test("POST: 201 status when adding a user", () => {
+    const newUser = {
+      username: "sworks9",
+      name: "Shauna Works",
+      email: "sworks9@wsj.com",
+      avatar: "https://robohash.org/nequesedquam.png?size=50x50&set=set1",
+      role: "user",
+      city: "Wirral",
+      country: "United Kingdom",
+      password: "kkk",
+    };
+    return request(app)
+      .post("/api/users")
+      .send(newUser)
+      .expect(201)
+      .then(({ body }) => {
+        expect(body.user).toMatchObject({
+          user_id: 11,
+          username: "sworks9",
+          name: "Shauna Works",
+          email: "sworks9@wsj.com",
+          avatar: "https://robohash.org/nequesedquam.png?size=50x50&set=set1",
+          role: "user",
+          city: "Wirral",
+          country: "United Kingdom",
+        });
       });
   });
 });

@@ -34,4 +34,23 @@ function authenticateUser(email, pass) {
       }
     });
 }
-module.exports = { fetchUserById, authenticateUser };
+function postUser({
+  username,
+  name,
+  email,
+  avatar,
+  role,
+  city,
+  country,
+  password,
+}) {
+  return db
+    .query(
+      "insert into users (username,name,email,avatar,role,city,country, password) values ($1, $2, $3, $4, $5, $6, $7, crypt($8, gen_salt('bf', 12))) returning *;",
+      [username, name, email, avatar, role, city, country, password]
+    )
+    .then(({ rows }) => {
+      return rows[0];
+    });
+}
+module.exports = { fetchUserById, authenticateUser, postUser };
