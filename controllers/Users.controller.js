@@ -52,9 +52,13 @@ function patchUser(req, res, next) {
 }
 function removeUser(req, res, next) {
   const { user_id } = req.params;
-  deleteUser(user_id).then((data) => {
-    res.status(204).send({ msg: data });
-  });
+  deleteUser(user_id)
+    .then(() => {
+      res.status(204).send();
+    })
+    .catch((err) => {
+      next(err);
+    });
 }
 module.exports = {
   getUserById,

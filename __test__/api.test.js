@@ -75,7 +75,15 @@ describe("/api/users/:user_id", () => {
       .delete("/api/users/2")
       .expect(204)
       .then(({ body }) => {
-        console.log(body);
+        expect(body).toMatchObject({});
+      });
+  });
+  test("Delete:204 delete user by non existant id", () => {
+    return request(app)
+      .delete("/api/users/50")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("User not found");
       });
   });
 });

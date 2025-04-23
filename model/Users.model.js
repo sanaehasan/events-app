@@ -79,8 +79,11 @@ function updateUser({
 function deleteUser(user_id) {
   return db
     .query("delete from users where user_id=$1;", [user_id])
-    .then(({ rows }) => {
-      return rows[0];
+    .then(({ rowCount }) => {
+      if (rowCount === 0) {
+        return Promise.reject({ status: 404, msg: "User not found" });
+      }
+      return "user deleted";
     });
 }
 module.exports = {
