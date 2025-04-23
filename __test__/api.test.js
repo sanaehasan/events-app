@@ -33,7 +33,7 @@ xdescribe("/any", () => {
       });
   });
 });
-describe("/api/users/:user_id", () => {
+xdescribe("/api/users/:user_id", () => {
   test("GET: 200 status - get a user by id", () => {
     return request(app)
       .get("/api/users/1")
@@ -175,7 +175,7 @@ xdescribe("/api/users", () => {
   });
 });
 
-xdescribe("/api/events", () => {
+describe("/api/events", () => {
   test("GET: 200 status get all events", () => {
     return request(app)
       .get("/api/events")
@@ -351,6 +351,22 @@ xdescribe("/api/events", () => {
         });
       });
   });
+  test("Delete:204 delete event by id", () => {
+    return request(app)
+      .delete("/api/events/2")
+      .expect(204)
+      .then(({ body }) => {
+        expect(body).toMatchObject({});
+      });
+  });
+  test("Delete:204 delete event by non existant id", () => {
+    return request(app)
+      .delete("/api/events/50")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Event not found");
+      });
+  });
 });
 
 xdescribe("/api/genre", () => {
@@ -367,7 +383,7 @@ xdescribe("/api/genre", () => {
       });
   });
 });
-xdescribe("/api/attendees", () => {
+describe("/api/attendees", () => {
   test("POST:201 post an attendee for an event", () => {
     const newAttendee = { user_id: 2, event_id: 7 };
     return request(app)
@@ -379,6 +395,22 @@ xdescribe("/api/attendees", () => {
           user_id: 2,
           event_id: 7,
         });
+      });
+  });
+  test("Delete:204 delete attendee by id", () => {
+    return request(app)
+      .delete("/api/attendees/2")
+      .expect(204)
+      .then(({ body }) => {
+        expect(body).toMatchObject({});
+      });
+  });
+  test("Delete:204 delete attendee by non existant id", () => {
+    return request(app)
+      .delete("/api/attendees/9999")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Attendee not found");
       });
   });
 });

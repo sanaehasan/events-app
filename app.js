@@ -17,9 +17,13 @@ const {
   postEvent,
   getEventByUserId,
   patchEvent,
+  removeEvent,
 } = require("./controllers/Events.controller");
 const { getGenre } = require("./controllers/Genre.controller");
-const { postAttendees } = require("./controllers/Attendees.controller");
+const {
+  postAttendees,
+  removeAttendee,
+} = require("./controllers/Attendees.controller");
 
 const app = express();
 
@@ -37,8 +41,10 @@ app.get("/api/events", getEvents);
 app.get("/api/events/:user_id", getEventByUserId);
 app.post("/api/events", postEvent);
 app.patch("/api/events", patchEvent);
+app.delete("/api/events/:event_id", removeEvent);
 app.get("/api/genre", getGenre);
 app.post("/api/attendees", postAttendees);
+app.delete("/api/attendees/:attendee_id", removeAttendee);
 app.get(/(.*)/, (req, res) => {
   return res.status(404).send({ msg: "Endpoint does not exist!" });
 });

@@ -3,6 +3,7 @@ const {
   addEvent,
   selectEventsByUserId,
   updateEvent,
+  deleteEvent,
 } = require("../model/Events.model");
 
 function getEvents(req, res, next) {
@@ -47,4 +48,20 @@ function patchEvent(req, res, next) {
       next(err);
     });
 }
-module.exports = { getEvents, postEvent, getEventByUserId, patchEvent };
+function removeEvent(req, res, next) {
+  const { event_id } = req.params;
+  deleteEvent(event_id)
+    .then(() => {
+      res.status(204).send();
+    })
+    .catch((err) => {
+      next(err);
+    });
+}
+module.exports = {
+  getEvents,
+  postEvent,
+  getEventByUserId,
+  patchEvent,
+  removeEvent,
+};

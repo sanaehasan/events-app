@@ -1,4 +1,4 @@
-const { addAttendees } = require("../model/Attendees.model");
+const { addAttendees, deleteAttendee } = require("../model/Attendees.model");
 
 function postAttendees(req, res, next) {
   const attendee = req.body;
@@ -6,5 +6,15 @@ function postAttendees(req, res, next) {
     return res.status(201).send({ attendee: data });
   });
 }
+function removeAttendee(req, res, next) {
+  const { attendee_id } = req.params;
+  deleteAttendee(attendee_id)
+    .then(() => {
+      res.status(204).send();
+    })
+    .catch((err) => {
+      next(err);
+    });
+}
 
-module.exports = { postAttendees };
+module.exports = { postAttendees, removeAttendee };
