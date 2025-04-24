@@ -25,14 +25,13 @@ const {
   removeAttendee,
 } = require("./controllers/Attendees.controller");
 const { authenticateToken } = require("./controllers/authenticate");
+const getEndPoints = require("./controllers/getEndPoint.controller");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.get("/api", (req, res) => {
-  return res.status(200).send({ msg: "welcom to my api for events" });
-});
+app.get("/api", getEndPoints);
 app.get("/api/users/:user_id", authenticateToken, getUserById);
 app.get("/api/users", authenticateUserFunction);
 app.post("/api/users", addUser);
