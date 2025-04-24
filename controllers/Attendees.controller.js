@@ -1,7 +1,6 @@
 const { addAttendees, deleteAttendee } = require("../model/Attendees.model");
 
 function postAttendees(req, res, next) {
-  console.log(req.body);
   const attendee = req.body;
   addAttendees(attendee)
     .then((data) => {

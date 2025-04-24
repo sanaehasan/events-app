@@ -13,7 +13,7 @@ afterAll(() => {
   db.end();
 });
 
-xdescribe("/api", () => {
+describe("/api", () => {
   test("GET:200 status - with a welcom message", () => {
     return request(app)
       .get("/api")
@@ -24,7 +24,7 @@ xdescribe("/api", () => {
   });
 });
 
-xdescribe("/any", () => {
+describe("/any", () => {
   test("GET:404 -return msg endpoint does not exist", () => {
     return request(app)
       .get("/hello")
@@ -34,10 +34,12 @@ xdescribe("/any", () => {
       });
   });
 });
-xdescribe("/api/users/:user_id", () => {
+describe("/api/users/:user_id", () => {
   test("GET: 200 status - get a user by id", () => {
+    const token = generateToken(4, "sworks9@wsj.com");
     return request(app)
       .get("/api/users/1")
+      .set({ authorization: token })
       .expect(200)
       .then(({ body }) => {
         expect(body.user).toMatchObject({
@@ -56,32 +58,40 @@ xdescribe("/api/users/:user_id", () => {
       });
   });
   test("Get: 404 when called for an id that does not exist in the database", () => {
+    const token = generateToken(4, "sworks9@wsj.com");
     return request(app)
       .get("/api/users/90")
+      .set({ authorization: token })
       .expect(404)
       .then(({ body }) => {
         expect(body.msg).toBe("User not found");
       });
   });
   test("Get: 400 bad request when query id is not a number", () => {
+    const token = generateToken(4, "sworks9@wsj.com");
     return request(app)
       .get("/api/users/hello")
+      .set({ authorization: token })
       .expect(400)
       .then(({ body }) => {
         expect(body.msg).toBe("Id should be a number");
       });
   });
   test("Delete:204 delete user by id", () => {
+    const token = generateToken(4, "sworks9@wsj.com");
     return request(app)
       .delete("/api/users/2")
+      .set({ authorization: token })
       .expect(204)
       .then(({ body }) => {
         expect(body).toMatchObject({});
       });
   });
-  test("Delete:204 delete user by non existant id", () => {
+  test("Delete:404 delete user by non existant id", () => {
+    const token = generateToken(4, "sworks9@wsj.com");
     return request(app)
       .delete("/api/users/50")
+      .set({ authorization: token })
       .expect(404)
       .then(({ body }) => {
         expect(body.msg).toBe("User not found");
@@ -157,8 +167,10 @@ describe("/api/users", () => {
       country: "United Kingdom",
       password: "kkk",
     };
+    const token = generateToken(4, "sworks9@wsj.com");
     return request(app)
       .patch("/api/users")
+      .set({ authorization: token })
       .send(newUser)
       .expect(200)
       .then(({ body }) => {
@@ -174,9 +186,30 @@ describe("/api/users", () => {
         });
       });
   });
+  test("patch: 401 when user is not authentified", () => {
+    const newUser = {
+      user_id: 4,
+      username: "sworks9",
+      name: "Shauna Works",
+      email: "sworks9@wsj.com",
+      avatar: "https://robohash.org/nequesedquam.png?size=50x50&set=set1",
+      role: "user",
+      city: "Wirral",
+      country: "United Kingdom",
+      password: "kkk",
+    };
+
+    return request(app)
+      .patch("/api/users")
+      .send(newUser)
+      .expect(401)
+      .then(({ text }) => {
+        expect(text).toBe("Unauthorized");
+      });
+  });
 });
 
-xdescribe("/api/events", () => {
+describe("/api/events", () => {
   test("GET: 200 status get all events", () => {
     return request(app)
       .get("/api/events")
@@ -258,8 +291,10 @@ xdescribe("/api/events", () => {
       });
   });
   test("GET: 200 status get  events by user_id", () => {
+    const token = generateToken(5, "sworks9@wsj.com");
     return request(app)
       .get("/api/events/5")
+      .set({ authorization: token })
       .expect(200)
       .then(({ body }) => {
         expect(body.events.length).toBe(10);
@@ -274,6 +309,7 @@ xdescribe("/api/events", () => {
       });
   });
   test("POST: 201 status when adding en event", () => {
+    const token = generateToken(4, "sworks9@wsj.com");
     const newEvent = {
       createdBy: 8,
       start_date: "27-09-2026",
@@ -291,6 +327,7 @@ xdescribe("/api/events", () => {
     };
     return request(app)
       .post("/api/events")
+      .set({ authorization: token })
       .send(newEvent)
       .expect(201)
       .then(({ body }) => {
@@ -313,6 +350,7 @@ xdescribe("/api/events", () => {
       });
   });
   test("PATCH: 200 status when updating en event", () => {
+    const token = generateToken(4, "sworks9@wsj.com");
     const Event = {
       event_id: 4,
       createdBy: 8,
@@ -331,6 +369,7 @@ xdescribe("/api/events", () => {
     };
     return request(app)
       .patch("/api/events")
+      .set({ authorization: token })
       .send(Event)
       .expect(200)
       .then(({ body }) => {
@@ -353,16 +392,20 @@ xdescribe("/api/events", () => {
       });
   });
   test("Delete:204 delete event by id", () => {
+    const token = generateToken(4, "sworks9@wsj.com");
     return request(app)
       .delete("/api/events/2")
+      .set({ authorization: token })
       .expect(204)
       .then(({ body }) => {
         expect(body).toMatchObject({});
       });
   });
-  test("Delete:204 delete event by non existant id", () => {
+  test("Delete:404 delete event by non existant id", () => {
+    const token = generateToken(4, "sworks9@wsj.com");
     return request(app)
       .delete("/api/events/50")
+      .set({ authorization: token })
       .expect(404)
       .then(({ body }) => {
         expect(body.msg).toBe("Event not found");
@@ -370,7 +413,7 @@ xdescribe("/api/events", () => {
   });
 });
 
-xdescribe("/api/genre", () => {
+describe("/api/genre", () => {
   test("GET:200 status - get all genre entrees", () => {
     return request(app)
       .get("/api/genre")
