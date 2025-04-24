@@ -1,10 +1,15 @@
 const { addAttendees, deleteAttendee } = require("../model/Attendees.model");
 
 function postAttendees(req, res, next) {
+  console.log(req.body);
   const attendee = req.body;
-  addAttendees(attendee).then((data) => {
-    return res.status(201).send({ attendee: data });
-  });
+  addAttendees(attendee)
+    .then((data) => {
+      return res.status(201).send({ attendee: data });
+    })
+    .catch((err) => {
+      next(err);
+    });
 }
 function removeAttendee(req, res, next) {
   const { attendee_id } = req.params;

@@ -3,6 +3,7 @@ const app = require("../app");
 const db = require("../db/connection");
 const seed = require("../db/seed/seed");
 const data = require("../db/data/test-data/index");
+const { generateToken } = require("../controllers/authenticate");
 
 beforeEach(() => {
   return seed(data);
@@ -87,7 +88,7 @@ xdescribe("/api/users/:user_id", () => {
       });
   });
 });
-xdescribe("/api/users", () => {
+describe("/api/users", () => {
   test("GET: 200 status  find user by email and password", () => {
     return request(app)
       .get("/api/users?email=awalbrook0@mtv.com&password=hello")
@@ -175,7 +176,7 @@ xdescribe("/api/users", () => {
   });
 });
 
-describe("/api/events", () => {
+xdescribe("/api/events", () => {
   test("GET: 200 status get all events", () => {
     return request(app)
       .get("/api/events")
@@ -386,8 +387,11 @@ xdescribe("/api/genre", () => {
 describe("/api/attendees", () => {
   test("POST:201 post an attendee for an event", () => {
     const newAttendee = { user_id: 2, event_id: 7 };
+    const token = generateToken(1, "awalbrook0@mtv.com");
+
     return request(app)
       .post("/api/attendees")
+      .set({ Authorization: token })
       .send(newAttendee)
       .then(({ body }) => {
         expect(body.attendee).toMatchObject({
@@ -398,16 +402,21 @@ describe("/api/attendees", () => {
       });
   });
   test("Delete:204 delete attendee by id", () => {
+    const token = generateToken(1, "awalbrook0@mtv.com");
+
     return request(app)
       .delete("/api/attendees/2")
+      .set({ Authorization: token })
       .expect(204)
       .then(({ body }) => {
         expect(body).toMatchObject({});
       });
   });
-  test("Delete:204 delete attendee by non existant id", () => {
+  test("Delete:404 delete attendee by non existant id", () => {
+    const token = generateToken(1, "awalbrook0@mtv.com");
     return request(app)
       .delete("/api/attendees/9999")
+      .set({ Authorization: token })
       .expect(404)
       .then(({ body }) => {
         expect(body.msg).toBe("Attendee not found");

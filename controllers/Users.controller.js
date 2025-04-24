@@ -6,10 +6,13 @@ const {
   deleteUser,
 } = require("../model/Users.model");
 
+const { generateToken } = require("./authenticate");
+
 function getUserById(req, res, next) {
   const { user_id } = req.params;
   fetchUserById(user_id)
     .then((data) => {
+      data.token = generateToken(data.user_id, data.email);
       res.status(200).send({ user: data });
     })
     .catch((err) => {

@@ -24,6 +24,7 @@ const {
   postAttendees,
   removeAttendee,
 } = require("./controllers/Attendees.controller");
+const { authenticateToken } = require("./controllers/authenticate");
 
 const app = express();
 
@@ -43,6 +44,7 @@ app.post("/api/events", postEvent);
 app.patch("/api/events", patchEvent);
 app.delete("/api/events/:event_id", removeEvent);
 app.get("/api/genre", getGenre);
+app.use(authenticateToken);
 app.post("/api/attendees", postAttendees);
 app.delete("/api/attendees/:attendee_id", removeAttendee);
 app.get(/(.*)/, (req, res) => {
