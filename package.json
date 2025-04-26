@@ -8,7 +8,8 @@
     "start": "node listen.js",
     "dev": "nodemon listen.js",
     "setup_dbs": "psql -f ./db/setup.sql",
-    "seed": "node ./db/seed/run_seed.js"
+    "seed": "node ./db/seed/run_seed.js",
+    "prod_seed": "NODE_ENV=production npm run seed"
   },
   "repository": {
     "type": "git",
