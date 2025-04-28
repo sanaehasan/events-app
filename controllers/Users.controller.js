@@ -12,7 +12,7 @@ function getUserById(req, res, next) {
   const { user_id } = req.params;
   fetchUserById(user_id)
     .then((data) => {
-      data.token = generateToken(data.user_id, data.email);
+      // data.token = generateToken(data.user_id, data.email);
       res.status(200).send({ user: data });
     })
     .catch((err) => {
@@ -22,8 +22,11 @@ function getUserById(req, res, next) {
 
 function authenticateUserFunction(req, res, next) {
   const { email, password } = req.query;
+
   authenticateUser(email, password)
     .then((data) => {
+      data.token = generateToken(data.user_id, data.email);
+      console.log(data);
       res.status(200).send({ user: data });
     })
     .catch((err) => {
