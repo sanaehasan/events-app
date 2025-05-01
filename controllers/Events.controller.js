@@ -4,6 +4,7 @@ const {
   selectEventsByUserId,
   updateEvent,
   deleteEvent,
+  fetchEventById,
 } = require("../model/Events.model");
 
 function getEvents(req, res, next) {
@@ -58,10 +59,21 @@ function removeEvent(req, res, next) {
       next(err);
     });
 }
+function getEventById(req, res, next) {
+  const { event_id } = req.params;
+  fetchEventById(event_id)
+    .then((data) => {
+      return res.status(200).send({ event: data });
+    })
+    .catch((err) => {
+      next(err);
+    });
+}
 module.exports = {
   getEvents,
   postEvent,
   getEventByUserId,
   patchEvent,
   removeEvent,
+  getEventById,
 };

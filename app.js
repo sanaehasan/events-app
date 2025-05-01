@@ -18,6 +18,7 @@ const {
   getEventByUserId,
   patchEvent,
   removeEvent,
+  getEventById,
 } = require("./controllers/Events.controller");
 const { getGenre } = require("./controllers/Genre.controller");
 const {
@@ -39,6 +40,7 @@ app.patch("/api/users", authenticateToken, patchUser);
 app.delete("/api/users/:user_id", authenticateToken, removeUser);
 app.get("/api/events", getEvents);
 app.get("/api/events/:user_id", authenticateToken, getEventByUserId);
+app.get("/api/events/event/:event_id", getEventById);
 app.post("/api/events", authenticateToken, postEvent);
 app.patch("/api/events", authenticateToken, patchEvent);
 app.delete("/api/events/:event_id", authenticateToken, removeEvent);

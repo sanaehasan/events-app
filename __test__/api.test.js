@@ -300,6 +300,29 @@ describe("/api/events", () => {
         expect(body.events.length).toBe(10);
       });
   });
+  test("GET: 200 status get  events by event_id", () => {
+    return request(app)
+      .get("/api/events/event/5")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.event).toMatchObject({
+          event_id: 5,
+          createdby: 1,
+          start_date: "22-11-2025",
+          end_date: "05-06-2026",
+          city: "London",
+          country: "United Kingdom",
+          image: "http://dummyimage.com/210x100.png/5fa2dd/ffffff",
+          price: "90.95",
+          title:
+            "ligula in lacus curabitur at ipsum ac tellus semper interdum mauris ullamcorper purus sit",
+          description:
+            "Nunc rhoncus dui vel sem. Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus. Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.",
+          location: "11852 Loftsgordon Plaza",
+          genre_id: 5,
+        });
+      });
+  });
   test("Get: 404 status when getting events by non existant genre ", () => {
     return request(app)
       .get("/api/events?genre=Reg")

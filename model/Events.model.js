@@ -116,10 +116,18 @@ function deleteEvent(event_id) {
       return "event deleted";
     });
 }
+function fetchEventById(event_id) {
+  return db
+    .query("select * from events where event_id=$1;", [event_id])
+    .then(({ rows }) => {
+      return rows[0];
+    });
+}
 module.exports = {
   fetchEvents,
   addEvent,
   selectEventsByUserId,
   updateEvent,
   deleteEvent,
+  fetchEventById,
 };
