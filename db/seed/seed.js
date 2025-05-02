@@ -24,7 +24,7 @@ const seed = ({ usersData, eventsData, genraData, attendeesData }) => {
             user_id SERIAL PRIMARY KEY,
             username VARCHAR NOT NULL,
             name VARCHAR,
-            email TEXT,
+            email TEXT UNIQUE,
             avatar VARCHAR,
             role VARCHAR NOT NULL,
             city VARCHAR NOT NULL,
