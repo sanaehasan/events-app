@@ -131,7 +131,7 @@ describe("/api/users", () => {
     const newUser = {
       username: "sworks9",
       name: "Shauna Works",
-      email: "sworks9@wsj.com",
+      email: "helloos99@wsj.com",
       avatar: "https://robohash.org/nequesedquam.png?size=50x50&set=set1",
       role: "user",
       city: "Wirral",
@@ -147,7 +147,7 @@ describe("/api/users", () => {
           user_id: 11,
           username: "sworks9",
           name: "Shauna Works",
-          email: "sworks9@wsj.com",
+          email: "helloos99@wsj.com",
           avatar: "https://robohash.org/nequesedquam.png?size=50x50&set=set1",
           role: "user",
           city: "Wirral",
@@ -158,12 +158,12 @@ describe("/api/users", () => {
   test("patch: 200 status when updating a user", () => {
     const newUser = {
       user_id: 4,
-      username: "sworks9",
-      name: "Shauna Works",
-      email: "sworks9@wsj.com",
-      avatar: "https://robohash.org/nequesedquam.png?size=50x50&set=set1",
-      role: "user",
-      city: "Wirral",
+      username: "dculllp3",
+      name: "Derron Culp",
+      email: "dculp3@usatoday.com",
+      avatar: "https://robohash.org/quoestnostrum.png?size=50x50&set=set1",
+      role: "admin",
+      city: "Middleton",
       country: "United Kingdom",
       password: "kkk",
     };
@@ -176,12 +176,12 @@ describe("/api/users", () => {
       .then(({ body }) => {
         expect(body.user).toMatchObject({
           user_id: 4,
-          username: "sworks9",
-          name: "Shauna Works",
-          email: "sworks9@wsj.com",
-          avatar: "https://robohash.org/nequesedquam.png?size=50x50&set=set1",
-          role: "user",
-          city: "Wirral",
+          username: "dculllp3",
+          name: "Derron Culp",
+          email: "dculp3@usatoday.com",
+          avatar: "https://robohash.org/quoestnostrum.png?size=50x50&set=set1",
+          role: "admin",
+          city: "Middleton",
           country: "United Kingdom",
         });
       });
