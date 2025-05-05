@@ -1,5 +1,99 @@
 {
   "GET /api": {
     "description": "serves all api's endpoints "
+  },
+  "GET /api/events": {
+    "description": "serves all the events "
+  },
+  "GET /api/events/event/:event_id": {
+    "description": "serves events by id "
+  },
+  "GET /api/users/:user_id": {
+    "description": "serves user by id "
+  },
+  "GET /api/events/:user_id": {
+    "description": "serves all events user had booked"
+  },
+  "GET /api/attendees": {
+    "description": "serves all events attendees"
+  },
+  "GET /api/genre": {
+    "description": "serves all genres or categories"
+  },
+  "POST /api/events": {
+    "description": "post an event ",
+    "event example": {
+      "createdBy": 1,
+      "start_date": "2025-12-29 18:00:00 +0100",
+      "end_date": "2025-12-30 18:00:00 +0100",
+      "city": "Milton",
+      "country": "United Kingdom",
+      "image": "http://dummyimage.com/133x100.png/dddddd/000000",
+      "price": 389.66,
+      "title": "fermentum justo nec condimentum neque sapien placerat ante nulla justo aliquam quis turpis eget",
+      "description": "Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti. Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris. Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet.",
+      "location": "77949 Scofield Road",
+      "genre_id": 2
+    }
+  },
+  "POST /api/users": {
+    "description": "register user",
+    "user post example": {
+      "username": "sstewartson4",
+      "name": "Stephen Stewartson",
+      "email": "sstewartson4@typepad.com",
+      "avatar": "https://robohash.org/infugitdoloribus.png?size=50x50&set=set1",
+      "role": "moderator",
+      "city": "Bradford",
+      "country": "United Kingdom",
+      "password": "$2a$12$b"
+    }
+  },
+  "POST /api/attendees": {
+    "description": "posts an event attendee",
+    "example of attendee post": {
+      "user_id": 1,
+      "event_id": 4
+    }
+  },
+  "PATCH /api/events": {
+    "description": "update an event ",
+    "event update example": {
+      "event_id": 2,
+      "createdBy": 1,
+      "start_date": "2025-12-29 18:00:00 +0100",
+      "end_date": "2025-12-30 18:00:00 +0100",
+      "city": "Milton",
+      "country": "United Kingdom",
+      "image": "http://dummyimage.com/133x100.png/dddddd/000000",
+      "price": 389.66,
+      "title": "fermentum justo nec condimentum neque sapien placerat ante nulla justo aliquam quis turpis eget",
+      "description": "Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti. Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris. Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet.",
+      "location": "77949 Scofield Road",
+      "genre_id": 2
+    }
+  },
+  "PATCH /api/users": {
+    "description": "update user",
+    "user update example": {
+      "user_id": 2,
+      "username": "sstewartson4",
+      "name": "Stephen Stewartson",
+      "email": "sstewartson4@typepad.com",
+      "avatar": "https://robohash.org/infugitdoloribus.png?size=50x50&set=set1",
+      "role": "moderator",
+      "city": "Bradford",
+      "country": "United Kingdom",
+      "password": "$2a$12$b"
+    }
+  },
+  "DELETE /api/users/:user_id": {
+    "description": "delete user by id "
+  },
+  "DELETE /api/events/:event_id": {
+    "description": "delete event by id"
+  },
+  "DELETE /api/attendees/:attendee_id": {
+    "description": "delete attendees by attendee_id"
   }
 }

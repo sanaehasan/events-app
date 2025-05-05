@@ -1,2 +1,3 @@
-# events-app
-this is an app the helps create and manage events 
+# events-app-api
+
+this is the api that servers the api's endpoints to create and manage events
