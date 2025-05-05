@@ -55,3 +55,9 @@ To run tests, run the following command
 ```bash
   npm run test
 ```
+
+## Demo link
+
+you can try all the api endpoints using this link
+
+https://events-app-tryx.onrender.com/api
