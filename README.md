@@ -61,3 +61,11 @@ To run tests, run the following command
 you can try all the api endpoints using this link
 
 https://events-app-tryx.onrender.com/api
+
+### Try the app on this online link
+
+https://events-surfer.netlify.app/
+
+### you can watch the demo on this link
+
+https://youtu.be/3VUyp-p57z8
